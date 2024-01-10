@@ -1,0 +1,17 @@
+let encodedAssumeRolePolicy = configuration.assumeRolePolicyDocument
+let assumeRolePolicy = json_parse(url_decode(%encodedAssumeRolePolicy))
+
+let matchedStatements = %assumeRolePolicy.Statement[
+    Action[*] == "sts:AssumeRole"
+    Effect == "Allow"
+    Principal.Service[*] == "ec2.amazonaws.com"
+]
+
+rule HAS_ASSUME_ROLE_POLICY when
+    resourceType == "AWS::IAM::Role"
+    %matchedStatements !empty
+{
+    some configuration.attachedManagedPolicies[*] {
+        policyArn == CONFIG_RULE_PARAMETERS.managedPolicyArn
+    }
+}
