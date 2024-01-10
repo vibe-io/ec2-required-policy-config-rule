@@ -54,6 +54,7 @@ export class Ec2RequiredPolicyConfigRule extends Resource {
 
     if (props.remediation?.enabled ?? true) {
       new Ec2RequiredRoleRemediationConfiguration(this, 'remediation', {
+        automatic: props.remediation?.automatic,
         managedPolicy: this.managedPolicy,
         rule: this.rule,
       });
