@@ -1,4 +1,4 @@
-import { Resource, ResourceProps } from 'aws-cdk-lib';
+import { Duration, Resource, ResourceProps } from 'aws-cdk-lib';
 import { CustomRule, ResourceType, RuleScope } from 'aws-cdk-lib/aws-config';
 import { IManagedPolicy } from 'aws-cdk-lib/aws-iam';
 import { IFunction } from 'aws-cdk-lib/aws-lambda';
@@ -10,6 +10,8 @@ import { EvaluationFunction } from './evaluation-function';
 export interface Ec2RequiredPolicyRemediationOptions {
   readonly automatic?: boolean;
   readonly enabled?: boolean;
+  readonly maxAutomaticAttempts?: number;
+  readonly retryPeriod?: Duration;
 }
 
 export interface Ec2RequiredPolicyConfigRuleProps extends ResourceProps {
@@ -56,6 +58,8 @@ export class Ec2RequiredPolicyConfigRule extends Resource {
       new Ec2RequiredRoleRemediationConfiguration(this, 'remediation', {
         automatic: props.remediation?.automatic,
         managedPolicy: this.managedPolicy,
+        maxAutomaticAttempts: props.remediation?.maxAutomaticAttempts,
+        retryPeriod: props.remediation?.retryPeriod,
         rule: this.rule,
       });
     }

@@ -1,4 +1,5 @@
 import { ArnFormat, Resource, ResourceProps } from 'aws-cdk-lib';
+import { IGrantable, PolicyStatement } from 'aws-cdk-lib/aws-iam';
 import { CfnDocument } from 'aws-cdk-lib/aws-ssm';
 import { IConstruct } from 'constructs';
 
@@ -101,5 +102,31 @@ export class Ec2RequiredPolicyRemediationDocument extends Resource {
 
   public automationDefinitionArnForVersion(version: string): string {
     return `${this.automationDefinitionArn}:${version}`;
+  }
+
+  public grantExecute(principal: IGrantable): void {
+    principal.grantPrincipal.addToPrincipalPolicy(new PolicyStatement({
+      actions: [
+        'config:BatchGetResourceConfig',
+      ],
+      resources: [
+        '*',
+      ],
+    }));
+
+    principal.grantPrincipal.addToPrincipalPolicy(new PolicyStatement({
+      actions: [
+        'iam:AttachRolePolicy',
+      ],
+      resources: [
+        this.stack.formatArn({
+          arnFormat: ArnFormat.SLASH_RESOURCE_NAME,
+          region: '',
+          resource: 'role',
+          resourceName: '*',
+          service: 'iam',
+        }),
+      ],
+    }));
   }
 }

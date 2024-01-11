@@ -376,6 +376,8 @@ const ec2RequiredPolicyRemediationOptions: Ec2RequiredPolicyRemediationOptions =
 | --- | --- | --- |
 | <code><a href="#ec2-required-policy-config-rule.Ec2RequiredPolicyRemediationOptions.property.automatic">automatic</a></code> | <code>boolean</code> | *No description.* |
 | <code><a href="#ec2-required-policy-config-rule.Ec2RequiredPolicyRemediationOptions.property.enabled">enabled</a></code> | <code>boolean</code> | *No description.* |
+| <code><a href="#ec2-required-policy-config-rule.Ec2RequiredPolicyRemediationOptions.property.maxAutomaticAttempts">maxAutomaticAttempts</a></code> | <code>number</code> | *No description.* |
+| <code><a href="#ec2-required-policy-config-rule.Ec2RequiredPolicyRemediationOptions.property.retryPeriod">retryPeriod</a></code> | <code>aws-cdk-lib.Duration</code> | *No description.* |
 
 ---
 
@@ -396,6 +398,26 @@ public readonly enabled: boolean;
 ```
 
 - *Type:* boolean
+
+---
+
+##### `maxAutomaticAttempts`<sup>Optional</sup> <a name="maxAutomaticAttempts" id="ec2-required-policy-config-rule.Ec2RequiredPolicyRemediationOptions.property.maxAutomaticAttempts"></a>
+
+```typescript
+public readonly maxAutomaticAttempts: number;
+```
+
+- *Type:* number
+
+---
+
+##### `retryPeriod`<sup>Optional</sup> <a name="retryPeriod" id="ec2-required-policy-config-rule.Ec2RequiredPolicyRemediationOptions.property.retryPeriod"></a>
+
+```typescript
+public readonly retryPeriod: Duration;
+```
+
+- *Type:* aws-cdk-lib.Duration
 
 ---
 
